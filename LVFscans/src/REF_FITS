@@ -1,0 +1,27 @@
+fits_create_file(&fptr, filename, &status)
+fits_open_file(&fptr, filename, READWRITE, &status)
+
+fits_create_img(fptr,  bitpix, naxis, naxes, &status) 
+fits_write_img(fptr, TUSHORT, fpixel, nelements, array[0], &status)
+fits_read_img(fptr, TFLOAT, fpixel, nbuffer, &nullval, buffer, &anynull, &status) 
+
+fits_create_tbl( fptr, ASCII_TBL, nrows, tfields, ttype, tform, tunit, extname, &status) 
+fits_read_tblbytes( infptr, irow, 1, naxes[0], buffer, &status); 
+fits_write_tblbytes(outfptr, noutrows, 1, naxes[0], buffer, &status); 
+fits_read_col(infptr, TFLOAT, colnum, frow, felem, naxes[1], &nullval, density, &anynulls, &status)
+fits_write_col(fptr, TSTRING, 1, firstrow, firstelem, nrows, planet,&status);
+fits_get_colnum(infptr, CASEINSEN, "density", &colnum, &status)
+
+
+fits_create_hdu(outfptr, &status)
+fits_movabs_hdu(fptr, 2, &hdutype, &status)
+fits_copy_hdu(infptr, outfptr, morekeys, &status)
+
+
+fits_get_hdrpos(infptr, &nkeys, &keypos, &status)
+fits_read_record (infptr, ii, card, &status)
+fits_write_record(outfptr,    card, &status); 
+fits_update_key(fptr, TLONG, "EXPOSURE", &exposure,"Total Exposure Time", &status)
+fits_read_keys_lng(infptr, "NAXIS", 1, 2, naxes, &nfound, &status)
+fits_read_keys_str(fptr, "TTYPE", 1, 3, ttype, &nfound, &status)
+
